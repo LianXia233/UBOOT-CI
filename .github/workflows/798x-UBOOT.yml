@@ -1,17 +1,17 @@
 name: 798x-UBOOT
 
 on:
-  #自动编译：每周日早上4点
-  #schedule:
+  # 自动编译：每周日早上4点
+  # schedule:
     #- cron: 0 20 * * 0
-  #手动编译
+  # 手动编译
   workflow_dispatch:
 
 env:
   GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-  WRT_TARGET: MTK-798x
-  WRT_REPO: https://github.com/1715173329/bl-mt798x-oss.git
-  WRT_BRANCH: atf-2025
+  WRT_TARGET: ZX7981PM
+  WRT_REPO: https://github.com/LianXia233/bl-mt798x.git
+  WRT_BRANCH: master
 
 permissions: write-all
 
@@ -34,10 +34,9 @@ jobs:
     needs: cleanup
     strategy:
       fail-fast: false
-      #max-parallel: 4
       matrix:
         WRT_ATF: [atf-20220606-637ba581b, atf-20250212-e09077068]
-        WRT_MTK: [uboot-mtk-20220606, uboot-mtk-20230718-09eda825]
+        WRT_MTK: [uboot-mtk-20230718-09eda825]
 
     steps:
       - name: Checkout Projects
@@ -88,6 +87,7 @@ jobs:
 
           sed -i "5s/UBOOT_DIR=.*/UBOOT_DIR=${{matrix.WRT_MTK}}/" ./build.sh
           sed -i "7s/ATF_DIR=.*/ATF_DIR=${{matrix.WRT_ATF}}/" ./build.sh
+          sed -i "s/CONFIG_DEFAULT_DEVICE_TREE=.*/CONFIG_DEFAULT_DEVICE_TREE=\"zx7981pm\"/" ./build.sh
 
       - name: Compile Firmware
         run: |
@@ -126,7 +126,7 @@ jobs:
           tag_name: ${{env.WRT_AUTHOR}}_${{env.WRT_VER}}_${{env.WRT_DATE}}
           files: ./wrt/upload/*.*
           body: |
-            这是个平台固件包，内含多个设备！
+            这是ZX7981PM平台的固件包，内含多个设备！
             请注意选择你需要的设备固件！
             不要问，刷就完事了！
 
