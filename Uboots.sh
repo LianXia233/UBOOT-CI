@@ -38,6 +38,6 @@ SOC=mt7986 BOARD=redmi_ax6000 MULTI_LAYOUT=1 ./build.sh
 SOC=mt7986 BOARD=ruijie_rg-x60 MULTI_LAYOUT=1 ./build.sh
 
 # ZX7981PM 设备支持
-SOC=mt7981 BOARD=zx7981pm MULTI_LAYOUT=1 ./build.sh
-SOC=mt7981 BOARD=zx7981pm ./build.sh
+SOC=mt7981 BOARD=7981_zx7981pm MULTI_LAYOUT=1 ./build.sh
+SOC=mt7981 BOARD=7981_zx7981pm ./build.sh
 
